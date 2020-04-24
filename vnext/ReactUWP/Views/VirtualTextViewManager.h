@@ -15,6 +15,7 @@ class VirtualTextViewManager : public ViewManagerBase {
   VirtualTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
@@ -23,11 +24,6 @@ class VirtualTextViewManager : public ViewManagerBase {
   bool RequiresYogaNode() const override;
 
  protected:
-  bool UpdateProperty(
-      ShadowNodeBase *nodeToUpdate,
-      const std::string &propertyName,
-      const folly::dynamic &propertyValue) override;
-
   XamlView CreateViewCore(int64_t tag) override;
 };
 

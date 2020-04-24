@@ -111,36 +111,36 @@ facebook::react::ShadowNode *ImageViewManager::createShadow() const {
   return new ImageShadowNode();
 }
 
-bool ImageViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto grid{nodeToUpdate->GetView().as<winrt::Grid>()};
 
   if (grid == nullptr)
-    return true;
+    return;
 
   bool finalizeBorderRadius{false};
-  bool ret = true;
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName{pair.first.getString()};
+    const folly::dynamic &propertyValue{pair.second};
 
-  if (propertyName == "source") {
-    setSource(grid, propertyValue);
-  } else if (propertyName == "resizeMode") {
-    auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
-    auto reactImage{grid.as<ReactImage>()};
-    reactImage->ResizeMode(resizeMode);
-  } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
-    finalizeBorderRadius = true;
-  } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
-  } else {
-    ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+    if (propertyName == "source") {
+      setSource(grid, propertyValue);
+    } else if (propertyName == "resizeMode") {
+      auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
+      auto reactImage{grid.as<ReactImage>()};
+      reactImage->ResizeMode(resizeMode);
+    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
+      finalizeBorderRadius = true;
+      continue;
+    } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
+      continue;
+    }
     // TODO: overflow
   }
 
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+
   if (finalizeBorderRadius)
     UpdateCornerRadiusOnElement(nodeToUpdate, grid);
-
-  return ret;
 }
 
 void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {

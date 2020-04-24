@@ -85,61 +85,68 @@ XamlView TextViewManager::CreateViewCore(int64_t /*tag*/) {
   return textBlock;
 }
 
-bool TextViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void TextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)
-    return true;
+    return;
 
-  if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
-  } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
-  } else if (propertyName == "numberOfLines") {
-    if (propertyValue.isNumber()) {
-      auto numberLines = static_cast<int32_t>(propertyValue.asDouble());
-      if (numberLines == 1) {
-        textBlock.TextWrapping(winrt::TextWrapping::NoWrap); // setting no wrap for single line
-                                                             // text for better trimming
-                                                             // experience
-      } else {
-        textBlock.TextWrapping(winrt::TextWrapping::Wrap);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue)) {
+      continue;
+    } else if (propertyName == "numberOfLines") {
+      if (propertyValue.isNumber()) {
+        auto numberLines = static_cast<int32_t>(propertyValue.asDouble());
+        if (numberLines == 1) {
+          textBlock.TextWrapping(winrt::TextWrapping::NoWrap); // setting no wrap for single line
+                                                               // text for better trimming
+                                                               // experience
+        } else {
+          textBlock.TextWrapping(winrt::TextWrapping::Wrap);
+        }
+        textBlock.MaxLines(numberLines);
+      } else if (propertyValue.isNull()) {
+        textBlock.TextWrapping(winrt::TextWrapping::Wrap); // set wrapping back to default
+        textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
       }
-      textBlock.MaxLines(numberLines);
-    } else if (propertyValue.isNull()) {
-      textBlock.TextWrapping(winrt::TextWrapping::Wrap); // set wrapping back to default
-      textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
+    } else if (propertyName == "lineHeight") {
+      if (propertyValue.isNumber())
+        textBlock.LineHeight(static_cast<int32_t>(propertyValue.asDouble()));
+      else if (propertyValue.isNull())
+        textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
+    } else if (propertyName == "selectable") {
+      if (propertyValue.isBool())
+        textBlock.IsTextSelectionEnabled(propertyValue.asBool());
+      else if (propertyValue.isNull())
+        textBlock.ClearValue(winrt::TextBlock::IsTextSelectionEnabledProperty());
+    } else if (propertyName == "allowFontScaling") {
+      if (propertyValue.isBool())
+        textBlock.IsTextScaleFactorEnabled(propertyValue.asBool());
+      else
+        textBlock.ClearValue(winrt::TextBlock::IsTextScaleFactorEnabledProperty());
+    } else if (propertyName == "selectionColor") {
+      if (IsValidColorValue(propertyValue)) {
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
+      } else
+        textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());
     }
-  } else if (propertyName == "lineHeight") {
-    if (propertyValue.isNumber())
-      textBlock.LineHeight(static_cast<int32_t>(propertyValue.asDouble()));
-    else if (propertyValue.isNull())
-      textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
-  } else if (propertyName == "selectable") {
-    if (propertyValue.isBool())
-      textBlock.IsTextSelectionEnabled(propertyValue.asBool());
-    else if (propertyValue.isNull())
-      textBlock.ClearValue(winrt::TextBlock::IsTextSelectionEnabledProperty());
-  } else if (propertyName == "allowFontScaling") {
-    if (propertyValue.isBool()) {
-      textBlock.IsTextScaleFactorEnabled(propertyValue.asBool());
-    } else {
-      textBlock.ClearValue(winrt::TextBlock::IsTextScaleFactorEnabledProperty());
-    }
-  } else if (propertyName == "selectionColor") {
-    if (IsValidColorValue(propertyValue)) {
-      textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
-    } else
-      textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-  return true;
+
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void TextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {

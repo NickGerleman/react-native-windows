@@ -85,28 +85,29 @@ XamlView CheckBoxViewManager::CreateViewCore(int64_t /*tag*/) {
   return checkbox;
 }
 
-bool CheckBoxViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void CheckBoxViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      checkbox.IsEnabled(!propertyValue.asBool());
-    else if (propertyValue.isNull())
-      checkbox.ClearValue(winrt::Control::IsEnabledProperty());
-  } else if (propertyName == "value") {
-    if (propertyValue.isBool())
-      checkbox.IsChecked(propertyValue.asBool());
-    else if (propertyValue.isNull())
-      checkbox.ClearValue(winrt::ToggleButton::IsCheckedProperty());
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "disabled") {
+      if (propertyValue.isBool())
+        checkbox.IsEnabled(!propertyValue.asBool());
+      else if (pair.second.isNull())
+        checkbox.ClearValue(winrt::Control::IsEnabledProperty());
+    } else if (propertyName == "value") {
+      if (propertyValue.isBool())
+        checkbox.IsChecked(propertyValue.asBool());
+      else if (pair.second.isNull())
+        checkbox.ClearValue(winrt::ToggleButton::IsCheckedProperty());
+    }
   }
-  return true;
+
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 } // namespace uwp

@@ -31,23 +31,24 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t /*tag*/) {
   return progressRing;
 }
 
-bool ActivityIndicatorViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "animating") {
-    if (propertyValue.isBool())
-      progressRing.IsActive(propertyValue.asBool());
-    else if (propertyValue.isNull())
-      progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyName);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "animating") {
+      if (propertyValue.isBool())
+        progressRing.IsActive(propertyValue.asBool());
+      else if (pair.second.isNull())
+        progressRing.ClearValue(winrt::ProgressRing::IsActiveProperty());
+    }
   }
-  return true;
+
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 } // namespace uwp

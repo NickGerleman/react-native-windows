@@ -60,31 +60,31 @@ folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
   return directEvents;
 }
 
-bool HyperlinkViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void HyperlinkViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      button.IsEnabled(!propertyValue.asBool());
-  } else if (propertyName == "tooltip") {
-    if (propertyValue.isString()) {
-      winrt::TextBlock tooltip = winrt::TextBlock();
-      tooltip.Text(asHstring(propertyValue));
-      winrt::ToolTipService::SetToolTip(button, tooltip);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "disabled") {
+      if (propertyValue.isBool())
+        button.IsEnabled(!propertyValue.asBool());
+    } else if (propertyName == "tooltip") {
+      if (propertyValue.isString()) {
+        winrt::TextBlock tooltip = winrt::TextBlock();
+        tooltip.Text(asHstring(propertyValue));
+        winrt::ToolTipService::SetToolTip(button, tooltip);
+      }
+    } else if (propertyName == "url") {
+      winrt::Uri myUri(asHstring(propertyValue));
+      button.NavigateUri(myUri);
     }
-  } else if (propertyName == "url") {
-    winrt::Uri myUri(asHstring(propertyValue));
-    button.NavigateUri(myUri);
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
 
-  return true;
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 } // namespace polyester

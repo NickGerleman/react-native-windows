@@ -73,23 +73,25 @@ XamlView ButtonViewManager::CreateViewCore(int64_t /*tag*/) {
   return button;
 }
 
-bool ButtonViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void ButtonViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto button = nodeToUpdate->GetView().as<winrt::Button>();
   if (button == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      button.IsEnabled(!propertyValue.asBool());
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "disabled") {
+      if (propertyValue.isBool())
+        button.IsEnabled(!propertyValue.asBool());
+    }
+
+    continue;
   }
-  return true;
-}
 
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
 } // namespace polyester
 } // namespace uwp
 } // namespace react

@@ -136,28 +136,28 @@ XamlView SwitchViewManager::CreateViewCore(int64_t /*tag*/) {
   return toggleSwitch;
 }
 
-bool SwitchViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void SwitchViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "disabled") {
-    if (propertyValue.isBool())
-      toggleSwitch.IsEnabled(!propertyValue.asBool());
-    else if (propertyValue.isNull())
-      toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
-  } else if (propertyName == "value") {
-    if (propertyValue.isBool())
-      toggleSwitch.IsOn(propertyValue.asBool());
-    else if (propertyValue.isNull())
-      toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "disabled") {
+      if (propertyValue.isBool())
+        toggleSwitch.IsEnabled(!propertyValue.asBool());
+      else if (pair.second.isNull())
+        toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
+    } else if (propertyName == "value") {
+      if (propertyValue.isBool())
+        toggleSwitch.IsOn(propertyValue.asBool());
+      else if (pair.second.isNull())
+        toggleSwitch.ClearValue(winrt::ToggleSwitch::IsOnProperty());
+    }
   }
-  return true;
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void SwitchViewManager::DispatchCommand(

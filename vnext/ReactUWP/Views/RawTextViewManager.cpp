@@ -38,36 +38,35 @@ XamlView RawTextViewManager::CreateViewCore(int64_t /*tag*/) {
   return run;
 }
 
-bool RawTextViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const folly::dynamic &propertyValue) {
+void RawTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto run = nodeToUpdate->GetView().as<winrt::Run>();
   if (run == nullptr)
-    return true;
+    return;
 
-  if (propertyName == "text") {
-    run.Text(asHstring(propertyValue));
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
 
-    if (nodeToUpdate->GetParent() != -1) {
-      if (auto instance = this->m_wkReactInstance.lock()) {
-        const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
-            instance->NativeUIManager()->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-        if (parent && parent->m_children.size() == 1) {
-          auto view = parent->GetView();
-          auto textBlock = view.try_as<winrt::TextBlock>();
-          if (textBlock != nullptr) {
-            textBlock.Text(run.Text());
+    if (propertyName == "text") {
+      run.Text(asHstring(propertyValue));
+      if (nodeToUpdate->GetParent() != -1) {
+        if (auto instance = this->m_wkReactInstance.lock()) {
+          const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
+              instance->NativeUIManager()->getHost()->FindShadowNodeForTag(nodeToUpdate->GetParent()));
+          if (parent && parent->m_children.size() == 1) {
+            auto view = parent->GetView();
+            auto textBlock = view.try_as<winrt::TextBlock>();
+            if (textBlock != nullptr) {
+              textBlock.Text(run.Text());
+            }
           }
-        }
 
-        NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
+          NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
+        }
       }
     }
-  } else {
-    return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
-  return true;
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
 void RawTextViewManager::NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate) {
