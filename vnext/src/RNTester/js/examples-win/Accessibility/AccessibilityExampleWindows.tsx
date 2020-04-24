@@ -270,7 +270,7 @@ class AccessibilityStateExamples extends React.Component {
   public state = {
     viewDisabled: false,
     itemsSelected: [false, false, false],
-    viewChecked: 0,
+    viewChecked: false,
     viewBusy: false,
     viewCollapsed: false,
   };
@@ -294,7 +294,7 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue',
           }}
           accessibilityRole="none"
-          accessibilityState={{disabled: this.state.viewDisabled}}>
+          accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
           <Text>
             This View should be{' '}
             {this.state.viewDisabled ? 'disabled' : 'enabled'} according to UIA
@@ -318,9 +318,9 @@ class AccessibilityStateExamples extends React.Component {
               }}
               accessibilityRole="button"
               accessibilityLabel={'Selectable item ' + (item.index + 1)}
-              accessibilityState={{
-                selected: this.state.itemsSelected[item.index],
-              }}
+              accessibilityStates={
+                this.state.itemsSelected[item.index] ? ['selected'] : []
+              }
               onPress={() => this.selectPress(item.index)}>
               <Text>
                 {this.state.itemsSelected[item.index]
@@ -332,8 +332,8 @@ class AccessibilityStateExamples extends React.Component {
           keyExtractor={(item, index) => index.toString()}
         />
         <Text>
-          The following TouchableHighlight cycles accessibilityState.checked
-          through unchecked/checked/mixed for the View under it:
+          The following TouchableHighlight toggles accessibilityState.checked
+          and accessibilityState.unchecked for the View under it:
         </Text>
         <TouchableHighlight
           style={{width: 100, height: 50, backgroundColor: 'blue'}}
@@ -343,37 +343,22 @@ class AccessibilityStateExamples extends React.Component {
         </TouchableHighlight>
         <View
           style={{
-            backgroundColor:
-              this.state.viewChecked === 0
-                ? 'green'
-                : this.state.viewChecked === 1
-                ? 'gray'
-                : 'lightskyblue',
+            backgroundColor: this.state.viewChecked ? 'gray' : 'lightskyblue',
           }}
           //@ts-ignore
           accessibilityRole="checkbox"
           //@ts-ignore
-          accessibilityState={{
-            checked:
-              this.state.viewChecked === 0
-                ? false
-                : this.state.viewChecked === 1
-                ? true
-                : 'mixed',
-          }}>
+          accessibilityStates={
+            this.state.viewChecked ? ['checked'] : ['unchecked']
+          }>
           <Text>
             This View should be{' '}
-            {this.state.viewChecked === 0
-              ? 'Unchecked'
-              : this.state.viewChecked === 1
-              ? 'Checked'
-              : 'Mixed'}{' '}
-            according to UIA
+            {this.state.viewChecked ? 'Checked' : 'Unchecked'} according to UIA
           </Text>
         </View>
         <Text>
-          The following TouchableHighlight toggles the acessibilityState.busy
-          for the View under it:
+          The following TouchableHighlight toggles accessibilityState.busy for
+          the View under it:
         </Text>
         <TouchableHighlight
           style={{width: 100, height: 50, backgroundColor: 'blue'}}
@@ -387,7 +372,7 @@ class AccessibilityStateExamples extends React.Component {
           }}
           accessibilityRole="none"
           //@ts-ignore
-          accessibilityState={{busy: this.state.viewBusy}}>
+          accessibilityStates={this.state.viewBusy ? ['busy'] : []}>
           <Text>
             This View should be {this.state.viewBusy ? 'Busy' : 'Not Busy'}{' '}
             according to UIA
@@ -410,9 +395,9 @@ class AccessibilityStateExamples extends React.Component {
           }}
           accessibilityRole="none"
           //@ts-ignore
-          accessibilityState={{
-            expanded: !this.state.viewCollapsed,
-          }}>
+          accessibilityStates={
+            this.state.viewCollapsed ? ['collapsed'] : ['expanded']
+          }>
           <Text>
             This View should be{' '}
             {this.state.viewCollapsed ? 'Collapsed' : 'Expanded'} according to
@@ -434,11 +419,7 @@ class AccessibilityStateExamples extends React.Component {
   };
 
   private checkedPress = () => {
-    let newChecked = this.state.viewChecked + 1;
-    if (newChecked === 3) {
-      newChecked = 0;
-    }
-    this.setState({viewChecked: newChecked});
+    this.setState({viewChecked: !this.state.viewChecked});
   };
 
   private busyPress = () => {
