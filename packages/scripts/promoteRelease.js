@@ -28,9 +28,6 @@ const glob = util.promisify(require('glob').glob);
   if (argv.release === 'preview') {
     console.log(`Creating branch ${branchName}...`);
     await git.checkoutBranch(branchName, 'HEAD');
-  } else {
-    console.log(`Checking out ${branchName}...`);
-    await git.checkoutLocal(branchName);
   }
 
   console.log('Updating Beachball configuration...');
@@ -239,7 +236,7 @@ async function updatePackageVersions(packageVersion) {
 async function createChangeFiles(changeType, message) {
   const repoRoot = await findRepoRoot();
   child_process.execSync(
-    `npx beachball change --type ${changeType} --message ${message}`,
+    `npx beachball change --type ${changeType} --message '${message}'`,
     {cwd: repoRoot, stdio: 'ignore'},
   );
 }
