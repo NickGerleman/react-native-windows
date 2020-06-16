@@ -50,6 +50,7 @@ const glob = util.promisify(require('glob').glob);
   }
 
   console.log('Committing changes...');
+  await git.add('--all');
   await git.commit(commitMessage);
 
   console.log('Generating change files...');
