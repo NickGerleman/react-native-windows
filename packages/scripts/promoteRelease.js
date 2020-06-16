@@ -239,6 +239,6 @@ async function createChangeFiles(changeType, message) {
   const repoRoot = await findRepoRoot();
   child_process.execSync(
     `npx beachball change --type ${changeType} --message ${message}`,
-    {cwd: repoRoot},
+    {cwd: repoRoot, stdio: 'ignore'},
   );
 }
