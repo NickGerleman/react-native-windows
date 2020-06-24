@@ -49,6 +49,6 @@
     "**/webdriverio": "5.12.1"
   },
   "beachball": {
-    "gitTags123": false
+    "gitTags": false
   }
 }
