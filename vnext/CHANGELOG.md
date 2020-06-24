@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Jun 2020 01:34:05 GMT and should not be manually modified.
+This log was last generated on Wed, 24 Jun 2020 01:38:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:38:46 GMT
+
+### Changes
+
+- Test3 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.99
 
