@@ -1,8 +1,182 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 20 Jun 2020 00:05:18 GMT and should not be manually modified.
+This log was last generated on Wed, 24 Jun 2020 02:12:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 02:12:03 GMT
+
+### Changes
+
+- Test7 (ngerlem@microsoft.com)
+- Test8 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 02:00:54 GMT
+
+### Changes
+
+- Test8 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test7 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 02:00:34 GMT
+
+### Changes
+
+- Test8 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test7 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:59:55 GMT
+
+### Changes
+
+- Test7 (ngerlem@microsoft.com)
+- Test8 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:58:03 GMT
+
+### Changes
+
+- Test8 (ngerlem@microsoft.com)
+- Test7 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:53:39 GMT
+
+### Changes
+
+- Test7 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test6 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:51:53 GMT
+
+### Changes
+
+- Test6 (ngerlem@microsoft.com)
+- Test5 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:49:54 GMT
+
+### Changes
+
+- Test5 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:42:07 GMT
+
+### Changes
+
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:41:55 GMT
+
+### Changes
+
+- Test3 (ngerlem@microsoft.com)
+- Test4 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:41:08 GMT
+
+### Changes
+
+- Test4 (ngerlem@microsoft.com)
+- Test3 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:38:46 GMT
+
+### Changes
+
+- Test3 (ngerlem@microsoft.com)
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:34:05 GMT
+
+### Changes
+
+- Test2 (ngerlem@microsoft.com)
+- Test (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Wed, 24 Jun 2020 01:33:18 GMT
+
+### Changes
+
+- Test (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.98
 
