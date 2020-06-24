@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 24 Jun 2020 01:38:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Test3",
+            "author": "ngerlem@microsoft.com",
+            "commit": "727c496c1f57083f953268f8e9407dcfcd10c1d3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Test2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7ccb7260add38bfee5f93af31ae4bd98a17f1b44",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Test",
+            "author": "ngerlem@microsoft.com",
+            "commit": "677e819708e03aaece84bb005ee0fd01891575bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 01:34:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Test2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7ccb7260add38bfee5f93af31ae4bd98a17f1b44",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Test",
+            "author": "ngerlem@microsoft.com",
+            "commit": "677e819708e03aaece84bb005ee0fd01891575bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jun 2020 01:33:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.99",
+      "version": "0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Test",
+            "author": "ngerlem@microsoft.com",
+            "commit": "677e819708e03aaece84bb005ee0fd01891575bf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Jun 2020 00:05:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.98",
       "version": "0.0.0-canary.98",
