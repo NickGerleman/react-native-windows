@@ -5,13 +5,20 @@
  */
 
 import React = require('react');
-import {Button, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  Text,
+  TextInput,
+  View,
+  TouchableHighlight,
+  ScrollView,
+} from 'react-native';
 import {Popup} from 'react-native-windows';
 
 interface IPopupExampleState {
   isFlyoutVisible: boolean;
   buttonTitle: string;
-  isLightDismissEnabled: boolean;
+  touchCount: number;
 }
 
 class PopupExample extends React.Component<{}, IPopupExampleState> {
@@ -20,8 +27,8 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
 
   public state: IPopupExampleState = {
     isFlyoutVisible: false,
-    buttonTitle: 'Open Flyout',
-    isLightDismissEnabled: false,
+    buttonTitle: 'Open Popup',
+    touchCount: 0,
   };
 
   public constructor(props: any) {
@@ -37,7 +44,7 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
           <Text style={{padding: 10, width: 300, height: 32}}>
             Text Input to Anchor popup to:{' '}
           </Text>
-          <TextInput style={{height: 32, width: 300}} ref={this._setRef} />
+          <TextInput style={{height: 32, width: 300}} />
         </View>
         <View style={{justifyContent: 'center', padding: 50}}>
           <Button onPress={this._onPress} title={this.state.buttonTitle} />
@@ -45,9 +52,9 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
         {this.state.isFlyoutVisible && (
           <Popup
             isOpen={this.state.isFlyoutVisible}
-            isLightDismissEnabled={this.state.isLightDismissEnabled}
             onDismiss={this._onPopupDismissed}
-            target={this._textInput}
+            target={this._textInput.current}
+            isLightDismissEnabled={false}
             horizontalOffset={10}
             verticalOffset={10}>
             <View
@@ -58,9 +65,13 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
                   paddingTop: 10,
                   paddingBottom: 30,
                 }}>
-                This is a flyout
+                This is a popup
               </Text>
-              <Button onPress={this._onPopupButtonPressed} title="Close" />
+              <Button onPress={this._togglePopup} title="Close" />
+              {this.state.touchCount > 0 && (
+                <Text>I'm touched ({this.state.touchCount})</Text>
+              )}
+              <ScrollView>{this._renderTouchables()}</ScrollView>
             </View>
           </Popup>
         )}
@@ -68,8 +79,48 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
     );
   }
 
-  private _setRef = (textInput: TextInput) => {
-    this._textInput = textInput;
+  _renderTouchables = () => {
+    const touchables: JSX.Element[] = [];
+    for (let i = 0; i < 10; i++) {
+      touchables.push(
+        <TouchableHighlight
+          style={{
+            paddingTop: 10,
+            paddingBottom: 20,
+            borderWidth: 1,
+            borderColor: '#000000',
+          }}
+          onPress={this._highlightPressed}
+          underlayColor={'rgb(210, 230, 255)'}>
+          <View>
+            <Text>Click on the touchable</Text>
+          </View>
+        </TouchableHighlight>,
+      );
+    }
+
+    return touchables;
+  };
+
+  _togglePopup = () => {
+    this.setState(state => ({
+      buttonTitle: state.isFlyoutVisible ? 'Open Popup' : 'Close Popup',
+      isFlyoutVisible: !state.isFlyoutVisible,
+      touchCount: 0,
+    }));
+  };
+
+  _onPopupDismissed = () => {
+    this.setState({
+      buttonTitle: 'Open Popup',
+      isFlyoutVisible: false,
+      touchCount: 0,
+    });
+  };
+
+  _highlightPressed = () => {
+    console.log('Touchable Highlight pressed');
+    this.setState({touchCount: this.state.touchCount + 1});
   };
 
   _onPress = () => {
@@ -78,10 +129,6 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
 
   _onPopupButtonPressed = () => {
     this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
-  };
-
-  _onPopupDismissed = (isOpen: boolean) => {
-    this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: isOpen});
   };
 }
 
