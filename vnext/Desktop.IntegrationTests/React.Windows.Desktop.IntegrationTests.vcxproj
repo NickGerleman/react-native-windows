@@ -84,11 +84,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClCompile Include="ChakraRuntimeHolder.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
-    <ClCompile Include="RNTesterIntegrationTests.cpp" />
-    <ClCompile Include="DesktopTestInstance.cpp" />
-    <ClCompile Include="DesktopTestRunner.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp" />
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
@@ -100,8 +96,8 @@
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88bab0fa-e1ac-4da7-a30c-f91702a8eadb}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
-      <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
       <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
@@ -113,10 +109,6 @@
     to co-locate dependencies with the test binary.
      -->
     <ReferenceCopyLocalPaths Include="$(BaseOutDir)\React.Windows.Desktop.DLL\react-native-win32.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ChakraRuntimeHolder.h" />
-    <ClInclude Include="DesktopTestInstance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,37 +1,31 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
  *
  * @format
- * @flow
  */
-
-'use strict';
 
 const React = require('react');
 const ReactNative = require('react-native');
 const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
-const DEFAULT_WS_URL = 'ws://localhost:5557/';
+const DEFAULT_WS_URL = 'ws://localhost:5555/';
 
 const WS_EVENTS = ['close', 'error', 'message', 'open'];
 
 type State = {
-  url: string,
-  fetchStatus: ?string,
-  socket: ?WebSocket,
-  socketState: ?number,
-  lastSocketEvent: ?string,
-  lastMessage: ?ArrayBuffer,
-  testMessage: ArrayBuffer,
-  testExpectedResponse: ArrayBuffer,
-  ...
+  url: string;
+  fetchStatus: string | null;
+  socket: WebSocket | null;
+  socketState: number | null;
+  lastSocketEvent: string | null;
+  lastMessage: ArrayBuffer | null;
+  testMessage: ArrayBuffer;
+  testExpectedResponse: ArrayBuffer;
 };
 
-class WebSocketBinaryTest extends React.Component<{...}, State> {
+class WebSocketBinaryTest extends React.Component<{}, State> {
   state: State = {
     url: DEFAULT_WS_URL,
     fetchStatus: null,
@@ -43,7 +37,11 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
     testExpectedResponse: new Uint8Array([4, 5, 6, 7]).buffer,
   };
 
-  _waitFor = (condition: any, timeout: any, callback: any) => {
+  _waitFor = (
+    condition: () => boolean,
+    timeout: number,
+    callback: (sucess: boolean) => void,
+  ) => {
     let remaining = timeout;
     const timeoutFunction = function() {
       if (condition()) {
@@ -163,12 +161,10 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
     });
   };
 
-  render(): React.Node {
+  render(): React.ReactNode {
     return <View />;
   }
 }
-
-WebSocketBinaryTest.displayName = 'WebSocketBinaryTest';
 
 AppRegistry.registerComponent('WebSocketBinaryTest', () => WebSocketBinaryTest);
 

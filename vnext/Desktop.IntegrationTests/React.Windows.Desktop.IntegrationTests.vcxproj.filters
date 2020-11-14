@@ -21,31 +21,11 @@
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="RNTesterIntegrationTests.cpp">
-      <Filter>Integration Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="DesktopTestInstance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HttpResourceIntegrationTests.cpp">
       <Filter>Integration Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="DesktopTestRunner.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DesktopTestInstance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ChakraRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

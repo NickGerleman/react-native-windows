@@ -2,15 +2,12 @@
   "includePatterns": [
     ".flowconfig",
     "flow-typed",
-    "DeforkingPatches/**",
     "ReactCopies/**",
     "src/**"
   ],
   "excludePatterns": [
     "DeforkingPatches/.clang-format",
-    "DeforkingPatches/README.md",
-    "src/tsconfig.json",
-    "**/*.windesktop.js"
+    "DeforkingPatches/README.md"
   ],
   "baseVersion": "0.0.0-77f7658e4",
   "overrides": [
@@ -67,26 +64,6 @@
       "file": "src/index.windows.js",
       "baseFile": "index.js",
       "baseHash": "073219bedb8f92d04fb2f60636df7314b8c243b7"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/DummyTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/LoggingTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/websocket_integration_test_server_binary.js"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/WebSocketBinaryTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "src/IntegrationTests/XHRTest.js"
     },
     {
       "type": "patch",
@@ -332,12 +309,8 @@
       "issue": 4590
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Network/RCTNetworking.windows.js"
-    },
-    {
       "type": "derived",
-      "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
+      "file": "src/Libraries/Network/RCTNetworking.windows.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
       "baseHash": "8ffebf68a136054311f723682864c4c609ad0587"
     },

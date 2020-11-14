@@ -5,6 +5,7 @@
  * @format
  */
 
+import * as _ from 'lodash';
 import {Server} from 'ws';
 
 /**
@@ -20,8 +21,15 @@ export default class TestWebSocketServer {
   public static async start(): Promise<TestWebSocketServer> {
     const server = new Server({port: 5555});
     server.on('connection', socket => {
+      socket.binaryType = 'arraybuffer';
+
       socket.on('message', message => {
-        socket.send(message + '_response');
+        const expectedBinary = new Uint8Array([1, 2, 3]).buffer;
+        if (_.isEqual(expectedBinary, message)) {
+          socket.send(new Uint8Array([4, 5, 6, 7]).buffer);
+        } else {
+          socket.send(message + '_response');
+        }
       });
 
       socket.send('hello');

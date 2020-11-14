@@ -15,12 +15,13 @@ registerTests([
   // Add our own auto-registered tests
   ...discoverTests(path.join(__dirname, '..', 'tests')),
 
-  block('BuiltinTests', [
-    // Add working upstream tests
+  block('LegacyTests', [
+    // Add working upstream or upstream-derived tests
     'IntegrationTestHarnessTest',
     'AppEventsTest',
     'PromiseTest',
     'WebSocketTest',
+    'WebSocketBinaryTest',
 
     // This one is seemingly broken upstream since
     // https://github.com/facebook/react-native/commit/61346d303a44b643b6029835018518d48c285a69

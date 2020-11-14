@@ -32,7 +32,7 @@ export default (rootPath: string): TestBlock[] => {
     const fileContents = fs.readFileSync(file);
 
     const ast = parser.parse(fileContents.toString(), {
-      plugins: ['typescript', 'jsx'],
+      plugins: ['classProperties', 'typescript', 'jsx'],
       sourceType: 'module',
     });
 

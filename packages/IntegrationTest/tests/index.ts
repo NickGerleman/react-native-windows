@@ -8,7 +8,8 @@
 require('./lib/SetupGlobals');
 
 require('./AppStateTests');
+require('./InteropCSModuleTests');
 require('./MountComponentTests');
 require('./PlatformTests');
 require('./SampleTests');
-require('./InteropCSModuleTests');
+require('./WebSocketBinaryTest');

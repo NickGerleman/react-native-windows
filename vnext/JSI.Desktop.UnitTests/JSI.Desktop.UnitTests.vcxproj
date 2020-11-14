@@ -108,9 +108,6 @@
     <ProjectReference Include="..\Desktop\React.Windows.Desktop.vcxproj">
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
-      <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <V8JSI_NODLLCOPY />

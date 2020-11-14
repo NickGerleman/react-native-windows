@@ -41,11 +41,6 @@ module.exports = {
   ],
 
   resolver: {
-    // We need a custom resolveRequest right now since our integration tests use a "windesktop" platform thats specific to integration tests.
-    resolveRequest: reactNativePlatformResolver({
-      windesktop: 'react-native-windows',
-      windows: 'react-native-windows',
-    }),
     extraNodeModules: {
       // Redirect react-native-windows to this folder
       'react-native-windows': rnwPath,
